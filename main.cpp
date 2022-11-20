@@ -1453,7 +1453,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			else if (move == FALSE) {
 				EnemyPosition.y++;
 			}
-		}
+		} 
 
 		if (Hit2 == FALSE) {
 			if (EnemyPosition2.y > 30) {
