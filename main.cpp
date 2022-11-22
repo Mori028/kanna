@@ -1240,7 +1240,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	//スプライト
 	Sprite* Title = nullptr;
-	Sprite::LoadTexture(1, L"Resources/gameStart1.png");
+	Sprite::LoadTexture(1, L"Resources/title.png");
 	Title = Sprite::Create(1, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.5f, 0.5f });
 	Title->SetSize({ 1280.0f, 720.0f });
 
@@ -1249,8 +1249,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	Tuto = Sprite::Create(3, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.5f, 0.5f });
 	Tuto->SetSize({ 1280.0f, 720.0f });
 
+	Sprite* game = nullptr;
+	Sprite::LoadTexture(4, L"Resources/setumei.png");
+	game = Sprite::Create(4, { 120.0f, 560.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.5f, 0.5f });
+	game->SetSize({ 240.0f, 320.0f });
+
 	Sprite* Clear = nullptr;
-	Sprite::LoadTexture(2, L"Resources/gameClear.png");
+	Sprite::LoadTexture(2, L"Resources/clear.png");
 	Clear = Sprite::Create(2, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }, { 0.5f, 0.5f });
 	Clear->SetSize({ 1280.0f, 720.0f });
 
@@ -1861,6 +1866,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		}
 
 		if (sceneNo_ == SceneNo::Game) {
+
+			
 			//0番定数バッファビュー(CBV)の設定コマンド
 			DXInit.commandList->SetGraphicsRootConstantBufferView(2, constBuffTransform0->GetGPUVirtualAddress());
 
@@ -1869,6 +1876,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 			// 描画コマンド
 			DXInit.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
+
+			Sprite::PreDraw(DXInit.commandList.Get());
+			game->Draw();
+
+
+			Sprite::PostDraw();
 
 			//if (Hit == FALSE) {
 			//	//1番定数バッファビュー(CBV)の設定コマンド
@@ -1899,8 +1912,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		if (sceneNo_ == SceneNo::Tuto) {
 			Sprite::PreDraw(DXInit.commandList.Get());
-
 			Tuto->Draw();
+	
 
 			Sprite::PostDraw();
 		}
